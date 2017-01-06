@@ -5,25 +5,18 @@ import redis from 'redis'
 const app = express()
 
 const redisClient = redis.createClient(config.redis_port, config.redis_host)
+const publishClient = redis.createClient(config.redis_port, config.redis_host)
 
-// redisClient.set("REDIS_KEY", '0')
+redisClient.on("message", (channel, message) => {
+  console.log(message)
+})
+
+redisClient.subscribe('REQUEST')
 
 app.get('/', (req,res) => {
-  redisClient.incr("REDIS_KEY")
-  redisClient.get("REDIS_KEY", (err, reply) => {
-    res.send(`
-    <html>
-      <head>
-        <title>Page</title>
-      <head>
-      <body>
-        <h1>Our Redis and Express Web Application</h1>
-        Redis count: ${reply}
-      </body>
-    </html>
-    `)
-    res.end()
-  })
+  publishClient.publish("REQUEST", `Request on ${req.socket.localPort} for ${req.url}`)
+  console.log(`local log for ${req.url}`)
+  res.end()
 })
 
 app.listen(process.argv[2])

@@ -1,7 +1,9 @@
 {
   "scripts": {
+    "start": "npm run dev 2333",
     "dev": "nodemon --exec npm run babel-node --watch ./ -- index.js",
-    "babel-node": "babel-node"
+    "babel-node": "babel-node",
+    "redis": "docker run -it --link packt-redis:redis --rm redis redis-cli -h redis -p 6379"
   },
   "dependencies": {
     "express": "^4.14.0",
