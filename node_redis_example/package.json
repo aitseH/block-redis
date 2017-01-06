@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "dev": "nodemon --exec npm run babel-node --watch ./ -- index.js",
+    "babel-node": "babel-node"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "redis": "^2.6.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-env": "^1.1.5",
+    "nodemon": "^1.11.0"
+  }
+}
